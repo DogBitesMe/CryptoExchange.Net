@@ -13,6 +13,7 @@ using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Objects.Options;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
 using Newtonsoft.Json.Linq;
 
 namespace CryptoExchange.Net
@@ -259,7 +260,10 @@ namespace CryptoExchange.Net
 
                 // If we don't have to keep track of the original json data we can use the JsonTextReader to deserialize the stream directly
                 // into the desired object, which has increased performance over first reading the string value into memory and deserializing from that
-                using var jsonReader = new JsonTextReader(reader);
+                //var text1 = reader.ReadToEnd();
+                
+                using var jsonReader = new JsonTextReader(text1);
+                //using var jsonReader = new JsonTextReader(new StringReader(text1));
                 _logger.Log(LogLevel.Debug, $"{(requestId != null ? $"[{requestId}] " : "")}Response received{(elapsedMilliseconds != null ? $" in {elapsedMilliseconds}" : " ")}ms");
                 return new CallResult<T>(serializer.Deserialize<T>(jsonReader)!);
             }
