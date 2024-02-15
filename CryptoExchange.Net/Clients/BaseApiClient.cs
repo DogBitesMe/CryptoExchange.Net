@@ -262,7 +262,7 @@ namespace CryptoExchange.Net
                 // into the desired object, which has increased performance over first reading the string value into memory and deserializing from that
                 //var text1 = reader.ReadToEnd();
                 
-                using var jsonReader = new JsonTextReader(text1);
+                using var jsonReader = new JsonTextReader(reader);
                 //using var jsonReader = new JsonTextReader(new StringReader(text1));
                 _logger.Log(LogLevel.Debug, $"{(requestId != null ? $"[{requestId}] " : "")}Response received{(elapsedMilliseconds != null ? $" in {elapsedMilliseconds}" : " ")}ms");
                 return new CallResult<T>(serializer.Deserialize<T>(jsonReader)!);
